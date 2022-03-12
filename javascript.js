@@ -10,7 +10,7 @@ function computerPlay() {
 }
 let choice = computerPlay();
 
-let input = prompt("Rock, paper, or scissors?")
+let input = prompt()
 let playerSelection = input.toLowerCase();
 
 function playRound(computerPlay, playerSelection) {
@@ -31,4 +31,3 @@ function playRound(computerPlay, playerSelection) {
     };
 };
 
-console.log(playRound(computerPlay, playerSelection));
