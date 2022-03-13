@@ -8,13 +8,14 @@ function computerPlay() {
         return "scissors"
     };
 }
-// let choice = computerPlay();
+// this function randomly selects rock, paper, or scissors and returns it in lowercase
 
 function playerChoice() {
     let input = prompt()
     let playerSelection = input.toLowerCase();
     return playerSelection;
 };
+//this function allows the player to choose rock, paper or scissors and returns it in lowercase
 
 function playRound(choice, playerSelection) {
     if (choice == playerSelection) { 
@@ -33,6 +34,7 @@ function playRound(choice, playerSelection) {
         return "You lose! Scissors beats paper"
     };
 };
+// this function plays a round of rock paper scissors and returns the result
 
 function game() {
     for (let i = 0; i < 5; i++) {
@@ -42,4 +44,8 @@ function game() {
     }
 }
 
+/* I call the computerPlay and playerChoice functions here and assign the results to variables to play the game
+the 'for' loop plays five games and prints the result in the console after each game */
+
 game();
+// just gotta call the game function 
