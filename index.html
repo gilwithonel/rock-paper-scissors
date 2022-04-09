@@ -3,10 +3,37 @@
 <head>
     <meta charset="utf-8">
     <title>Rock Paper Scissors</title>
-
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p>Play Rock, Paper, Scissors in the Console. Only input "rock", "paper", or "scissors" in the prompt box.</p>
+    <div class="container">
+        <h1 id="header">Rock, Paper, Scissors</h1>
+        <h2 id="instr">Click either the Rock, Paper, or Scissors button to play against the AI. First to 5 wins!</h2>
+        
+        <div class="buttons">
+            <button id="0">Rock</button>
+            <button id="1">Paper</button> 
+            <button id="2">Scissors</button>
+        </div>
+
+        <div class="labels">
+            <span id="playerLabel">Player Scores</span>
+            <span id="compLabel">Computer Scores</span>
+        </div>
+        
+        <div class="scores">
+            <div id="playerScore"></div>
+            <div id="compScore"></div>
+        </div>
+
+        <div><span id="resultsLabel">Results</span></div>
+
+        <div id="roundResults"></div>
+
+        <div>
+            <button id="reset">Play Again!</button>
+        </div>
+    </div>
     <script src="javascript.js"></script>
 </body>
 

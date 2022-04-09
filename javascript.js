@@ -1,51 +1,71 @@
-function computerPlay() {
-    let compChoice = (Math.floor(Math.random() * 3))
-    if (compChoice == 0) {
-        return "rock"
-    } else if (compChoice == 1) {
-        return "paper"
+const playBtn = document.querySelectorAll('div.buttons button');
+const roundResults = document.querySelector('#roundResults');
+const playerPoints = document.querySelector('#playerScore');
+const compPoints = document.querySelector('#compScore');
+const resetBtn = document.querySelector('#reset');
+
+resetBtn.addEventListener('click', () => location.reload());
+
+playBtn.forEach(button => {
+    button.addEventListener('click', getPlayerChoice)
+});
+
+let compChoices = [{choice: 'Rock', value: 0}, {choice: 'Paper', value: 1}, {choice: 'Scissors', value: 2}];
+let playerScore = 0;
+let compScore = 0;
+let playerChoice;
+
+function compPlay() {
+    let result = compChoices[Math.floor(Math.random() * compChoices.length)];
+    return result;
+};
+
+function playRound (playerSelection, compSelection) {
+    let roundWinCombo = `${playerSelection}-${compSelection.value}`;
+    let playerWinCombo = ['1-0', '0-2', '2-1'];
+
+    if (Number(playerSelection) === compSelection.value) {
+        playerPoints.textContent = playerScore
+        compPoints.textContent = compScore
+        roundResults.textContent = "It's a tie!"
+    } else if (playerWinCombo.includes(roundWinCombo)) {
+        playerPoints.textContent = ++playerScore
+        roundResults.textContent = `You win! ${playerChoice} beats ${compSelection.choice}.`;
     } else {
-        return "scissors"
-    };
-}
-// this function randomly selects rock, paper, or scissors and returns it in lowercase
-
-function playerChoice() {
-    let input = prompt()
-    let playerSelection = input.toLowerCase();
-    return playerSelection;
-};
-//this function allows the player to choose rock, paper or scissors and returns it in lowercase
-
-function playRound(choice, playerSelection) {
-    if (choice == playerSelection) { 
-        return "Tie!"
-    } else if (choice == "rock" && playerSelection == "paper") {
-        return "You win! Paper beats rock"
-    } else if (choice == "paper" && playerSelection == "rock") {
-        return "You lose! Paper beats rock"
-    } else if (choice == "scissors" && playerSelection == "rock") {
-        return "You win! Rock beats scissors"
-    } else if (choice == "rock" && playerSelection == "scissors") {
-        return "You lose! Rock beats scissors"
-    } else if (choice == "paper" && playerSelection == "scissors") {
-        return "You win! Scissors beats paper"
-    } else if (choice == "scissors" && playerSelection == "paper") {
-        return "You lose! Scissors beats paper"
-    };
-};
-// this function plays a round of rock paper scissors and returns the result
-
-function game() {
-    for (let i = 0; i < 5; i++) {
-        let choice = computerPlay();
-        let playerSelection = playerChoice();
-        console.log(playRound(choice, playerSelection));
+        compPoints.textContent = ++compScore
+        roundResults.textContent = `You lose! ${compSelection.choice} beats ${playerChoice}.`;
     }
-}
+    checkWinner();
+};
 
-/* I call the computerPlay and playerChoice functions here and assign the results to variables to play the game
-the 'for' loop plays five games and prints the result in the console after each game */
+const winnerResults = {
+    computer: ["You lost the game to a computer! Womp womp.", 'red'],
+    player: ['You beat a computer at a game of chance! I hope you feel good about yourself.', 'green'],
+    tie: ['The game is a tie, try again!', 'black']
+};
 
-game();
-// just gotta call the game function 
+function checkWinner() {
+    if (compScore === 5 || playerScore === 5) {
+        if (compScore === playerScore) {
+            updateWinner('tie')
+        } else {
+            let win = `${(compScore > playerScore) ? 'computer' : 'player'}`;
+            updateWinner(win);
+        }
+    }
+};
+
+function updateWinner(winner) {
+    roundResults.textContent = winnerResults[winner][0];
+    roundResults.style.color = winnerResults[winner][1];
+
+    playBtn.forEach(button => {
+        button.removeEventListener('click', getPlayerChoice);
+    });
+};
+
+function getPlayerChoice(e) {
+    let playerSelection = (e.target.id);
+    playerChoice = e.target.textContent;
+    playRound(playerSelection, compPlay());
+};
